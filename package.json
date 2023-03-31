@@ -17,6 +17,6 @@
     "start": "ts-node index.ts"
   },
   "engines": {
-    "node": "16.13.0"
+    "node": "16.13.2"
   }
 }
