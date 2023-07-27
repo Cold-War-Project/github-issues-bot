@@ -27,25 +27,6 @@ client.on("ready", () => {
   const guildId = process.env.GUILD_ID || "";
 
   const guild = client.guilds.cache.get(guildId);
-
-  let commands;
-
-  const command = new DiscordJS.SlashCommandBuilder()
-    .setDescription("Open github issue")
-    .setName("report");
-
-  if (guild) {
-    commands = guild.commands;
-  } else {
-    commands = client.application?.commands;
-  }
-
-  //   commands?.create({
-  //     name: "Open github issue",
-  //     type: 3,
-  //   });
-
-  commands?.create(command);
 });
 
 client.on("interactionCreate", async (interaction) => {
