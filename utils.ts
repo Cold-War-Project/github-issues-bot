@@ -25,39 +25,9 @@ export const getModal = (description: string) => {
     .setRequired(true)
     .setMinLength(12);
 
-  const stepsToReproduce = new TextInputBuilder()
-    .setStyle(TextInputStyle.Paragraph)
-    .setCustomId("stepsToReproduce")
-    .setLabel("Steps to reproduce")
-    .setPlaceholder("1. \n 2. \n 3. \n etc...")
-    .setRequired(true)
-    .setMinLength(12);
-
-  const userOS = new TextInputBuilder()
-    .setStyle(TextInputStyle.Short)
-    .setCustomId("userEnvironment")
-    .setPlaceholder("What operating system are you using?")
-    .setRequired(true);
-
-  const userVersion = new TextInputBuilder()
-    .setStyle(TextInputStyle.Short)
-    .setCustomId("userVersion")
-    .setPlaceholder("What version of the mod are you using?")
-    .setRequired(true);
-
-  const userGPU = new TextInputBuilder()
-    .setStyle(TextInputStyle.Short)
-    .setCustomId("userGPU")
-    .setPlaceholder("What GPU are you using?")
-    .setRequired(true);
-
   const rows = [
     issueTitle,
     issueDescription,
-    stepsToReproduce,
-    userOS,
-    userVersion,
-    userGPU,
   ].map((component) =>
     new ActionRowBuilder<TextInputBuilder>().addComponents([component])
   );
