@@ -1,4 +1,4 @@
-import DiscordJS from "discord.js";
+import DiscordJS, { CommandInteraction } from "discord.js";
 import dotenv from "dotenv";
 import { Octokit } from "@octokit/rest";
 import { getModal } from "./utils";
@@ -32,12 +32,20 @@ client.on("ready", () => {
 });
 
 client.on("interactionCreate", async (interaction) => {
-  if (interaction.isMessageContextMenuCommand()) {
-    const { commandName, targetMessage } = interaction;
-    if (commandName === "report") {
-      const modal = getModal(targetMessage.content);
-      interaction.showModal(modal);
-    }
+  if (interaction.isCommand()) {
+    await interaction
+      .showModal(
+        getModal(
+          interaction.options.data[0].value as string, // ["issueTitle"]
+          interaction.options.data[1].value as string // ["issueDescription"]
+        )
+      )
+      .catch((err) => {
+        console.log(err);
+        interaction.reply(
+          `DiscordJS API tesponded with an error.\nError: ${err}}\nAction: While showing modal`
+        );
+      });
   } else if (interaction.isModalSubmit()) {
     const { fields } = interaction;
     const issueTitle = fields.getTextInputValue("issueTitle");
@@ -59,7 +67,9 @@ client.on("interactionCreate", async (interaction) => {
       })
       .catch((err) => {
         console.log(err);
-        interaction.reply("There was an error creating the issue");
+        interaction.reply(
+          `Octokit API responded with an error\nError: ${err}}\nAction: While creating issue in github`
+        );
       });
   }
 });
