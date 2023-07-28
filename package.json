@@ -16,5 +16,8 @@
   },
   "scripts": {
     "start": "ts-node index.ts"
+  },
+  "engines": {
+    "node": "17.x"
   }
 }
