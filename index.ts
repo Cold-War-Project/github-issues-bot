@@ -40,10 +40,6 @@ client.on("interactionCreate", async (interaction) => {
           interaction.options.data[1].value as string // ["issueDescription"]
         )
       )
-      .then(() => {
-        interaction.ephemeral = true;
-        interaction.reply("Use the modal to finalize your issue creation.");
-      })
       .catch((err) => {
         console.log(err);
         interaction.ephemeral = true;
