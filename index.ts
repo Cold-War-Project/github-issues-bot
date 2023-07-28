@@ -42,8 +42,9 @@ client.on("interactionCreate", async (interaction) => {
       )
       .catch((err) => {
         console.log(err);
+        interaction.ephemeral = true;
         interaction.reply(
-          `DiscordJS API tesponded with an error.\nError: ${err}}\nAction: While showing modal`
+          `DiscordJS API responded with an error.\nError: ${err}}\nAction: While showing modal`
         );
       });
   } else if (interaction.isModalSubmit()) {
@@ -63,10 +64,12 @@ client.on("interactionCreate", async (interaction) => {
         body: issueDescription,
       })
       .then((res) => {
+        interaction.ephemeral = true;
         interaction.reply(`Issue created: ${res.data.html_url}`);
       })
       .catch((err) => {
         console.log(err);
+        interaction.ephemeral = true;
         interaction.reply(
           `Octokit API responded with an error\nError: ${err}}\nAction: While creating issue in github`
         );
