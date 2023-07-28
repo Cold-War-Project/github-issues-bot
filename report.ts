@@ -10,11 +10,13 @@ export default {
         .setName("title")
         .setDescription("The title of the issue")
         .setRequired(true)
+        .setMinLength(12)
     )
     .addStringOption((option) =>
       option
         .setName("description")
         .setDescription("The description of the issue")
         .setRequired(true)
+        .setMinLength(12)
     ),
 };
