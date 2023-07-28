@@ -2,6 +2,7 @@ import DiscordJS from "discord.js";
 import dotenv from "dotenv";
 import { Octokit } from "@octokit/rest";
 import { getModal } from "./utils";
+import report from "./report";
 import express from "express";
 dotenv.config();
 
@@ -27,12 +28,13 @@ client.on("ready", () => {
   const guildId = process.env.GUILD_ID || "";
 
   const guild = client.guilds.cache.get(guildId);
+  guild?.commands.create(report.data);
 });
 
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isMessageContextMenuCommand()) {
     const { commandName, targetMessage } = interaction;
-    if (commandName === "Open github issue") {
+    if (commandName === "report") {
       const modal = getModal(targetMessage.content);
       interaction.showModal(modal);
     }
@@ -45,7 +47,7 @@ client.on("interactionCreate", async (interaction) => {
       baseUrl: "https://api.github.com",
     });
 
-    octokit.rest.issues
+    await octokit.rest.issues
       .create({
         owner: process.env.GITHUB_USERNAME || "",
         repo: process.env.GITHUB_REPOSITORY || "",
@@ -54,8 +56,14 @@ client.on("interactionCreate", async (interaction) => {
       })
       .then((res) => {
         interaction.reply(`Issue created: ${res.data.html_url}`);
+      })
+      .catch((err) => {
+        console.log(err);
+        interaction.reply("There was an error creating the issue");
       });
   }
 });
 
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN).catch((err) => {
+  console.log(err);
+});

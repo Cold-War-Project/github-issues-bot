@@ -5,7 +5,7 @@ import {
   TextInputStyle,
 } from "discord.js";
 
-export const getModal = (description: string) => {
+export const getModal = (title?: string, description?: string) => {
   const modal = new ModalBuilder()
     .setTitle("Create github issue")
     .setCustomId("AwesomeForm");
@@ -14,6 +14,7 @@ export const getModal = (description: string) => {
     .setStyle(TextInputStyle.Short)
     .setCustomId("issueTitle")
     .setLabel("Issue title")
+    .setValue(title || "")
     .setRequired(true)
     .setMinLength(12);
 
@@ -21,14 +22,11 @@ export const getModal = (description: string) => {
     .setStyle(TextInputStyle.Paragraph)
     .setCustomId("issueDescription")
     .setLabel("Issue description")
-    .setValue(description)
+    .setValue(description || "")
     .setRequired(true)
     .setMinLength(12);
 
-  const rows = [
-    issueTitle,
-    issueDescription,
-  ].map((component) =>
+  const rows = [issueTitle, issueDescription].map((component) =>
     new ActionRowBuilder<TextInputBuilder>().addComponents([component])
   );
 
