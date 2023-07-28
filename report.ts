@@ -7,13 +7,13 @@ export default {
     .setDescription("Send a report directly to our github repository")
     .addStringOption((option) =>
       option
-        .setName("issueTitle")
+        .setName("title")
         .setDescription("The title of the issue")
         .setRequired(true)
     )
     .addStringOption((option) =>
       option
-        .setName("issueDescription")
+        .setName("description")
         .setDescription("The description of the issue")
         .setRequired(true)
     ),
